@@ -7,7 +7,7 @@
 }(function factory($, root) {
 	'use strict';
 
-	var oService = function() {
+	var oClient = function() {
 		this.cache = [];
 	};
 
@@ -21,7 +21,7 @@
 	 * @param {String} dataType | Datatype we are expecting to recieve
 	 * @returns {Object.<XMLHttpRequest>} | response from url
 	 */
-	oService.prototype.get = function(url, data = null, proxy = null, dataType = 'text') {
+	oClient.prototype.get = function(url, data = null, proxy = null, dataType = 'text') {
 		if(proxy) {
 			data = {
 				url: url + $.param(data)
@@ -39,9 +39,9 @@
 	};
 
 	if(root) {
-		root.oService = oService;
+		root.oClient = oClient;
 	} else {
-		return oService;
+		return oClient;
 	}
 
 }));

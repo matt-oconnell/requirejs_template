@@ -13,14 +13,16 @@
 
     <!--<script data-main="scripts/main" src="scripts/require.js"></script>-->
 
-    <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-    <script src="scripts/app/oservice.js"></script>
+    <script src="scripts/lib/jquery.js"></script>
     <script src="scripts/lib/mustache.js"></script>
+    <script src="scripts/lib/oclient.js"></script>
+
     <script src="scripts/app/widget.js"></script>
     <script>
         $( document ).ready(function() {
             $('div').iTunesWidget({
-                env: 'dev'
+                env: 'prod',
+                term: 'Spotifyyyyy'
             });
         });
     </script>

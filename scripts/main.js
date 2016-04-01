@@ -2,7 +2,8 @@ requirejs.config({
 	baseUrl: 'scripts',
 	paths: {
 		jquery: 'lib/jquery',
-		mustache: 'lib/mustache'
+		mustache: 'lib/mustache',
+		oclient: 'lib/oclient'
 	}
 });
 
