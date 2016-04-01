@@ -9,6 +9,8 @@ requirejs.config({
 
 requirejs(['jquery', 'app/widget'],
 	function($) {
-		$('div').widget();
+		$('div').iTunesWidget({
+			env: 'dev'
+		});
 	}
 );
