@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Default ES6 Template</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF-8">
+    <link rel="stylesheet" href="dist/css/app.css">
+</head>
+<body>
+
+    <h1>Testing</h1>
+    <div class="itunes"></div>
+
+	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="dist/js/app.js"></script>
+    <script>
+        $('.itunes').itunesWidget({
+            template: 'template1',
+            env: 'dev'
+        })
+    </script>
+
+</body>
+</html>
