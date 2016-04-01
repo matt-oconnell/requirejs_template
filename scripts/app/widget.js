@@ -26,6 +26,16 @@
 		this.core(el, config);
 	};
 
+	/**
+	 * This is intended for static $.iTunesWidget.pollAPI calls
+	 * Contains all the functionality of the widget without manipulating the DOM
+	 * Returns formatted JSON as the callback parameter
+	 *
+	 * @method isValid
+	 * @param {Object} customOptions | Custom configuration options
+	 * @param {Object} callback | Callback function
+	 * @return {Function(JSON)} | callback function
+	 */
 	iTunesWidget.prototype.pollAPI = function(customOptions, callback) {
 	    var config = this.configure(customOptions);
 		this.core(null, config, callback);
