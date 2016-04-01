@@ -26,6 +26,11 @@
 		this.core(el, config);
 	};
 
+	iTunesWidget.prototype.pollAPI = function(customOptions, callback) {
+	    var config = this.configure(customOptions);
+		this.core(null, config, callback);
+	};
+
 	/**
 	 * Checks for required input configurations
 	 * Checks for valid env values
@@ -57,14 +62,13 @@
 	 * Configuration object
 	 * These can be overridden by custom options passed into the widget
 	 */
-	var config = {
+	iTunesWidget.prototype.config = {
 		media: 'software',
 		proxy: 'proxy.php',
 		template: 'default',
 		endpoints: {
 			dev: 'scripts/app/test-data.json',
 			prod: 'https://itunes.apple.com/search?'
-			// 'http://itunes.apple.com/lookup?id=400274934'
 		},
 		env: 'prod'
 	};
@@ -78,7 +82,7 @@
 	 */
 	iTunesWidget.prototype.configure = function(customOptions) {
 		// Combine user options with defaults
-		config = $.extend(config, customOptions);
+		var config = $.extend({}, this.config, customOptions);
 
 		config.endpoint = this.endpoint(config);
 		config.proxy = this.proxy(config);
@@ -133,18 +137,28 @@
 	 *
 	 * @method core
 	 * @param {Object} el | Current DOM element
+	 * @param {Object} config | Merged config object
+	 * @param {Object} callback | Callback function (this is for the static .pollAPI option!)
 	 */
-	iTunesWidget.prototype.core = function(el, config) {
+	iTunesWidget.prototype.core = function(el, config, callback) {
+		var that = this;
 		Promise.all([
 			this.getAPIData(config),
 			this.getTemplateData(config)
 			// Wait for both responses
-		]).then((responses) => {
-			var data = this.formatData(responses[0]);
+		]).then(function(responses) {
+			var data = that.formatData(responses[0]);
+
+			// We're just polling, don't attempt to alter DOM
+			if(callback) {
+				callback(data);
+				return false;
+			}
+
 			var template = responses[1];
 			var tmpl = Mustache.render(template, data);
 			$(el).append($(tmpl));
-		}).catch((e) => {
+		}).catch(function(e) {
 			console.log('Error', e);
 		});
 	};

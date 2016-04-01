@@ -20,10 +20,19 @@
     <script src="scripts/app/widget.js"></script>
     <script>
         $( document ).ready(function() {
+
             $('div').iTunesWidget({
-                env: 'prod',
-                term: 'Spotifyyyyy'
+                env: 'dev',
+                term: 'Spotify'
             });
+
+            $.iTunesWidget.pollAPI({
+                env: 'dev',
+                term: 'other'
+            }, function(data) {
+                console.log(data);
+            });
+
         });
     </script>
 
