@@ -1,12 +1,12 @@
-(function(factory) {
-	if(typeof define === 'function' && define.amd) {
-		// AMD. Register as an anonymous module depending on jQuery.
-		define(['jquery', 'mustache'], factory);
-	} else {
-		// No AMD. Register plugin with global jQuery object.
-		factory(jQuery, Mustache);
-	}
-}(function($, Mustache) {
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery', 'mustache', './oservice'], factory);
+  } else if (typeof exports === 'object') {
+    factory(require('jquery', 'mustache', './oservice'));
+  } else {
+    factory(jQuery, Mustache, oService);
+  }
+}(function ($, Mustache, oService) {
 	'use strict';
 
 	/**
@@ -133,7 +133,7 @@
 	 * @returns {Object.<XMLHttpRequest>} | API data
 	 */
 	iTunesWidget.prototype.getAPIData = function() {
-		return this.get(this.endpoint, this.params, this.proxy)
+		return oService.prototype.get(this.endpoint, this.params, this.proxy)
 	};
 
 	/*
@@ -143,7 +143,7 @@
 	 * @returns {Object.<XMLHttpRequest>} | raw template
 	 */
 	iTunesWidget.prototype.getTemplateData = function() {
-		return this.get(this.template)
+		return oService.prototype.get(this.template)
 	};
 
 	/*
@@ -183,32 +183,32 @@
 		};
 	};
 
-	/**
-	 * Makes an HTTP GET request
-	 *
-	 * @method get
-	 * @param {String} url
-	 * @param {Object|null} data | Query parameters
-	 * @param {String} proxy | Server-side proxy that will forward our request
-	 * @param {String} dataType | Datatype we are expecting to recieve
-	 * @returns {Object.<XMLHttpRequest>} | response from url
-	 */
-	iTunesWidget.prototype.get = function(url, data = null, proxy = null, dataType = 'text') {
-		if(proxy) {
-			data = {
-				url: url + $.param(data)
-			};
-			url = proxy;
-		}
-		return $.ajax({
-			url: url,
-			method: 'get',
-			data: data,
-			dataType: dataType
-		}).fail((e) => {
-			console.log('Get failed: ', e.responseText);
-		});
-	};
+	///**
+	// * Makes an HTTP GET request
+	// *
+	// * @method get
+	// * @param {String} url
+	// * @param {Object|null} data | Query parameters
+	// * @param {String} proxy | Server-side proxy that will forward our request
+	// * @param {String} dataType | Datatype we are expecting to recieve
+	// * @returns {Object.<XMLHttpRequest>} | response from url
+	// */
+	//iTunesWidget.prototype.get = function(url, data = null, proxy = null, dataType = 'text') {
+	//	if(proxy) {
+	//		data = {
+	//			url: url + $.param(data)
+	//		};
+	//		url = proxy;
+	//	}
+	//	return $.ajax({
+	//		url: url,
+	//		method: 'get',
+	//		data: data,
+	//		dataType: dataType
+	//	}).fail((e) => {
+	//		console.log('Get failed: ', e.responseText);
+	//	});
+	//};
 
 	// Extend JQuery fn for $('$id').iTunesWidget()
 	$.fn.iTunesWidget = function(options) {

@@ -6,8 +6,7 @@ requirejs.config({
 	}
 });
 
-
-requirejs(['jquery', 'app/widget'],
+requirejs(['jquery', './app/widget'],
 	function($) {
 		$('div').iTunesWidget({
 			env: 'dev'
