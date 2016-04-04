@@ -19,9 +19,6 @@
 		if(!this.isValid(customOptions)) {
 			return false;
 		}
-		/**
-		 * @property {Object} config | will contain custom options and config.options
-		 */
 		var config = this.configure(customOptions);
 		this.core(el, config);
 	};
@@ -200,7 +197,7 @@
 	};
 
 	/*
-	 * Maps API data to template-friendly object form
+	 * Formats API data
 	 *
 	 * @method formatData
 	 * @param {String} raw | raw JSON-parseable API data
@@ -214,33 +211,45 @@
 			return false;
 		}
 
-		var results = json.results;
 		var data = [];
-		results.forEach((d) => {
-			data.push({
-				img: {
-					small: d.artworkUrl60,
-					medium: d.artworkUrl100,
-					large: d.artworkUrl512
-				},
-				developer: {
-					name: d.artistName,
-					url: d.sellerUrl
-				},
-				price: d.formattedPrice,
-				name: d.trackName,
-				url: d.trackViewUrl,
-				description: d.description,
-				rating: {
-					average: d.averageUserRating,
-					count: d.userRatingCount
-				}
-			})
+		json.results.forEach((dataPoint) => {
+			var formattedData = mapData(dataPoint);
+			data.push(formattedData);
 		});
+
 		return {
 			data: data
 		};
 	};
+
+	/*
+	 * Maps individual data objects to template-friendly object form
+	 *
+	 * @method mapData
+	 * @param {Object} raw | raw API data
+	 * @returns {Object} | formatted API data
+	 */
+	function mapData(raw) {
+	    return {
+			img: {
+				small: raw.artworkUrl60,
+				medium: raw.artworkUrl100,
+				large: raw.artworkUrl512
+			},
+			developer: {
+				name: raw.artistName,
+				url: raw.sellerUrl
+			},
+			price: raw.formattedPrice,
+			name: raw.trackName,
+			url: raw.trackViewUrl,
+			description: raw.description,
+			rating: {
+				average: raw.averageUserRating,
+				count: raw.userRatingCount
+			}
+		}
+	}
 
 	// Extend JQuery fn for $('$id').iTunesWidget()
 	$.fn.iTunesWidget = function(options) {
